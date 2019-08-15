@@ -15,8 +15,13 @@
         canvas.height = 300;
         var dt = 0;
         var anterior = 0;
-        var pcw= 30;
-        var pcvx = 50;
+        var pc = {};
+        pc.w= 30;
+        pc.vx = 50;
+        pc.vy= 0;
+        pc.x=100;
+        pc.y=100;
+        
         var  ctx=canvas.getContext("2d");
         var f1;
         var f2;
@@ -27,19 +32,19 @@
         function escutateclaPressionada(e){
             console.log(e.keyCode);
             if (e.keyCode==37){
-                pcvx=-80
+                pc.vx=-80
             }
             if (e.keyCode==39){
-                pcvx=80
+                pc.vx=80
             }
         }
         function escutateclaSolta(e){
             console.log(e.keyCode);
             if (e.keyCode==37){
-                pcvx= 0
+                pc.vx= 0
             }
             if (e.keyCode==39){
-                pcvx= 0
+                pc.vx= 0
             }
         }
         
@@ -53,9 +58,9 @@
         }
         function desenhaPC(x,y){
             ctx.fillStyle="Purple";
-            ctx.fillRect(x,y,pcw,pcw);
+            ctx.fillRect(x,y,pc.w,pc.w);
             ctx.strokeStyle = "black ";
-            ctx.strokeRect(x,y,pcw,pcw)
+            ctx.strokeRect(x,y,pc.w,pc.w)
 
         }
         function passo(t){
@@ -64,22 +69,24 @@
             ctx.fillStyle="Black";
             ctx.fillText(t,10,10);
             ctx.fillText(dt,10,20);
-            pcx=pcx + pcvx*dt;
-            desenhaPC(pcx,100);
+            
+            pc.x=pc.x + pc.vx*dt;
+            pc.y=pc.y + pc.vy*dt;
+
+            desenhaPC(pc.x,100);
             anterior = t;
-            if(pcx>=canvas.width){
-                //pcvx = -pcvx;
-                pcx = 0- pcw;
-            }else if(pcx<=0-pcw){
-                //pcvx = -pcvx;
-                pcx = canvas.width;
+            if(pc.x>=canvas.width){
+                //pc.vx = -pc.vx;
+                pc.x = 0- pc.w;
+            }else if(pc.x<=0-pc.w){
+                //pc.vx = -pc.vx;
+                pc.x = canvas.width;
             }
                 requestAnimationFrame(passo);
         }
         //progamaPrincipal
         addEventListener("keydown", escutateclaPressionada);
         addEventListener("keyup", escutateclaSolta);
-        var pcx=100;
         requestAnimationFrame(passo);
 
         
